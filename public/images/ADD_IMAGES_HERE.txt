@@ -1,0 +1,27 @@
+📸 MISSING IMAGES - ADD THESE TO DISPLAY IN HERO SECTION
+
+Please save your images with these exact filenames in this folder:
+
+1. meter-box.jpg
+   - The electrical meter boxes image you provided
+   - Will display in the "Solar" card (bottom-left)
+
+2. cctv-camera.jpg  
+   - The CCTV security cameras image you provided
+   - Will display in the "Security" card (bottom-right)
+
+Current Status:
+✅ solar-panels.jpg (carousel)
+✅ electrician.jpg (carousel)
+✅ power-lines.jpg (carousel)
+❌ meter-box.jpg (Solar card - MISSING)
+❌ cctv-camera.jpg (Security card - MISSING)
+
+Once you add these files, the cards will display your actual images!
+For now, they show dark grey gradient backgrounds as placeholders.
+
+Image Requirements:
+- Format: JPG or PNG
+- Size: 600x600px recommended
+- Optimized: Under 500KB per image
+- Good contrast for white text overlay

@@ -1,0 +1,85 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap');
+
+@theme inline {
+  --color-background: #FAFAF8;
+  --color-foreground: #0F0F0F;
+  --color-card: #FFFFFF;
+  --color-primary: #0F0F0F;
+  --color-secondary: #5C5C5C;
+  --color-border: #E0E0E0;
+  --color-accent: #C17A2E;
+  --color-accent-muted: #C17A2E18;
+  --color-hover: #F5F5F3;
+  --color-muted: #8A857C;
+
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+
+  --tracking-tighter: -0.03em;
+  --tracking-tight: -0.015em;
+  --tracking-normal: -0.005em;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  letter-spacing: var(--tracking-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: var(--tracking-tight);
+}
+
+.font-serif {
+  letter-spacing: var(--tracking-tighter);
+}
+
+/* Section rhythm */
+.section-padding {
+  @apply py-24 px-4 md:px-6;
+}
+
+.section-container {
+  @apply max-w-6xl mx-auto;
+}
+
+.section-eyebrow {
+  @apply text-xs font-semibold uppercase text-accent mb-3;
+  letter-spacing: 0.06em;
+}
+
+.section-title {
+  @apply font-serif text-4xl md:text-5xl text-primary leading-[1.05];
+  letter-spacing: var(--tracking-tighter);
+}
+
+.section-subtitle {
+  @apply text-secondary text-base md:text-lg mt-4 max-w-xl leading-relaxed;
+}
+
+/* Bento surfaces */
+.bento-card {
+  @apply bg-card rounded-2xl border-2 border-border overflow-hidden transition-all duration-300;
+  box-shadow: 0 2px 8px rgba(15, 15, 15, 0.04);
+}
+
+.bento-card:hover {
+  @apply border-primary/20;
+  box-shadow: 0 8px 24px rgba(15, 15, 15, 0.08);
+}
+
+/* Form focus */
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
