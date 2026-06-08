@@ -16,27 +16,41 @@ interface Package {
 export default function InverterSolutions() {
   const [packages, setPackages] = useState<Package[]>([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchPackages();
-  }, []);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchPackages = async () => {
+    console.log('🔄 InverterSolutions: Fetching packages from Supabase...');
     try {
       const { data, error } = await supabase
         .from('inverter_packages')
         .select('*')
         .order('id');
 
-      if (error) throw error;
-      setPackages(data || []);
-    } catch (error) {
-      console.error('Error fetching packages:', error);
+      if (error) {
+        console.error('❌ Supabase error:', error);
+        setError(error.message);
+        throw error;
+      }
+
+      if (data && data.length > 0) {
+        console.log('✅ Packages fetched successfully:', data);
+        setPackages(data);
+      } else {
+        console.log('⚠️ No packages found in database');
+        setError('No packages found');
+      }
+      
+      setLoading(false);
+    } catch (err: unknown) {
+      console.error('❌ Error fetching packages:', err);
+      console.log('🔄 Using fallback prices');
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      setError(errorMessage);
       // Fallback to default packages if Supabase fails
       setPackages([
         {
           id: 1,
-          name: '3.5KVA',
+          name: '3.5KVA Inverter Package',
           battery: '200AH Battery',
           without_solar: '₦450,000',
           with_solar: '₦750,000',
@@ -44,7 +58,7 @@ export default function InverterSolutions() {
         },
         {
           id: 2,
-          name: '5KVA',
+          name: '5KVA Inverter Package',
           battery: '220AH Battery',
           without_solar: '₦650,000',
           with_solar: '₦1,100,000',
@@ -52,7 +66,7 @@ export default function InverterSolutions() {
         },
         {
           id: 3,
-          name: '7.5KVA',
+          name: '7.5KVA Inverter Package',
           battery: '2 × 220AH Batteries',
           without_solar: '₦950,000',
           with_solar: '₦1,650,000',
@@ -60,17 +74,21 @@ export default function InverterSolutions() {
         },
         {
           id: 4,
-          name: '10KVA',
+          name: '10KVA Inverter Package',
           battery: '4 × 220AH Batteries',
           without_solar: '₦1,500,000',
           with_solar: '₦2,400,000',
           featured: false,
         },
       ]);
-    } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchPackages();
+  }, []);
 
   if (loading) {
     return (
@@ -108,6 +126,14 @@ export default function InverterSolutions() {
         >
           Premium inverter packages with professional installation
         </motion.p>
+
+        {error && (
+          <div className="max-w-2xl mx-auto mb-6 bg-yellow-50 border-2 border-yellow-200 rounded-lg p-4">
+            <p className="text-yellow-800 text-sm">
+              ⚠️ Using cached prices. Database error: {error}
+            </p>
+          </div>
+        )}
         
         {/* Simple Grid Layout */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -130,7 +156,9 @@ export default function InverterSolutions() {
               
               {/* Header */}
               <div className="text-center mb-6">
-                <h3 className="font-bold text-3xl text-primary mb-2">{pkg.name}</h3>
+                <h3 className="font-bold text-3xl text-primary mb-2">
+                  {pkg.name.replace(' Inverter Package', '')}
+                </h3>
                 <p className="text-secondary text-sm">{pkg.battery}</p>
               </div>
               
