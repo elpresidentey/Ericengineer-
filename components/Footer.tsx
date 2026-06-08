@@ -1,10 +1,12 @@
+import Logo from './Logo';
+
 export default function Footer() {
   return (
     <footer className="bg-primary text-white py-14 px-4 md:px-6">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-10 mb-10">
           <div>
-            <h3 className="font-serif text-xl mb-3">Eric Ohiol Engineering</h3>
+            <Logo className="h-12 w-auto mb-4 text-white" />
             <p className="text-white/55 text-sm leading-relaxed">
               Premium electrical and engineering solutions for over 30 years
             </p>

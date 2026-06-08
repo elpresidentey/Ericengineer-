@@ -101,16 +101,49 @@ ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE testimonials ENABLE ROW LEVEL SECURITY;
 
 -- Drop existing policies if they exist
-DROP POLICY IF EXISTS "Allow public read access" ON services;
-DROP POLICY IF EXISTS "Allow public read access" ON inverter_packages;
-DROP POLICY IF EXISTS "Allow public read access" ON projects;
-DROP POLICY IF EXISTS "Allow public read access" ON testimonials;
+DROP POLICY IF EXISTS "Allow public read" ON services;
+DROP POLICY IF EXISTS "Allow public insert" ON services;
+DROP POLICY IF EXISTS "Allow public update" ON services;
+DROP POLICY IF EXISTS "Allow public delete" ON services;
 
--- Create policies for public read access
-CREATE POLICY "Allow public read access" ON services FOR SELECT USING (true);
-CREATE POLICY "Allow public read access" ON inverter_packages FOR SELECT USING (true);
-CREATE POLICY "Allow public read access" ON projects FOR SELECT USING (true);
-CREATE POLICY "Allow public read access" ON testimonials FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Allow public read" ON inverter_packages;
+DROP POLICY IF EXISTS "Allow public insert" ON inverter_packages;
+DROP POLICY IF EXISTS "Allow public update" ON inverter_packages;
+DROP POLICY IF EXISTS "Allow public delete" ON inverter_packages;
+
+DROP POLICY IF EXISTS "Allow public read" ON projects;
+DROP POLICY IF EXISTS "Allow public insert" ON projects;
+DROP POLICY IF EXISTS "Allow public update" ON projects;
+DROP POLICY IF EXISTS "Allow public delete" ON projects;
+
+DROP POLICY IF EXISTS "Allow public read" ON testimonials;
+DROP POLICY IF EXISTS "Allow public insert" ON testimonials;
+DROP POLICY IF EXISTS "Allow public update" ON testimonials;
+DROP POLICY IF EXISTS "Allow public delete" ON testimonials;
+
+-- Create policies for full public access (READ, INSERT, UPDATE, DELETE)
+-- Services
+CREATE POLICY "Allow public read" ON services FOR SELECT USING (true);
+CREATE POLICY "Allow public insert" ON services FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public update" ON services FOR UPDATE USING (true);
+CREATE POLICY "Allow public delete" ON services FOR DELETE USING (true);
+
+-- Inverter Packages
+CREATE POLICY "Allow public read" ON inverter_packages FOR SELECT USING (true);
+CREATE POLICY "Allow public insert" ON inverter_packages FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public update" ON inverter_packages FOR UPDATE USING (true);
+CREATE POLICY "Allow public delete" ON inverter_packages FOR DELETE USING (true);
+
+-- Projects
+CREATE POLICY "Allow public read" ON projects FOR SELECT USING (true);
+CREATE POLICY "Allow public insert" ON projects FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public update" ON projects FOR UPDATE USING (true);
+CREATE POLICY "Allow public delete" ON projects FOR DELETE USING (true);
+
+-- Testimonials
+CREATE POLICY "Allow public read" ON testimonials FOR SELECT USING (true);
+CREATE POLICY "Allow public insert" ON testimonials FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public update" ON testimonials FOR UPDATE USING (true);
+CREATE POLICY "Allow public delete" ON testimonials FOR DELETE USING (true);
 
 -- Admin users table is protected - no public access
--- Admin authentication will be handled through API routes

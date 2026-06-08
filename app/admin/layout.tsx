@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useState } from 'react';
+import { LogoIcon } from '@/components/Logo';
 
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: '📊' },
@@ -19,24 +20,16 @@ export default function AdminLayout({
 }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isAuthenticated] = useState(
-    typeof window !== 'undefined' && sessionStorage.getItem('admin_authenticated') === 'true'
-  );
+
+  // Don't wrap login page
+  if (pathname === '/admin') {
+    return <>{children}</>;
+  }
 
   const handleLogout = () => {
     sessionStorage.removeItem('admin_authenticated');
     window.location.href = '/admin';
   };
-
-  // If not authenticated and not on login page, don't show admin layout
-  if (!isAuthenticated && pathname !== '/admin') {
-    return <>{children}</>;
-  }
-
-  // If on login page, show without layout
-  if (pathname === '/admin' && !isAuthenticated) {
-    return <>{children}</>;
-  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -57,10 +50,15 @@ export default function AdminLayout({
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="p-6 border-b border-border">
-            <h2 className="font-serif text-2xl font-bold text-primary">
-              Eric Electrical
-            </h2>
-            <p className="text-sm text-secondary mt-1">Admin Dashboard</p>
+            <div className="flex items-center gap-3">
+              <LogoIcon className="h-10 w-10 flex-shrink-0" />
+              <div>
+                <h2 className="font-serif text-xl font-bold text-primary leading-tight">
+                  Eric Electrical
+                </h2>
+                <p className="text-xs text-secondary mt-0.5">Admin Dashboard</p>
+              </div>
+            </div>
           </div>
 
           {/* Navigation */}

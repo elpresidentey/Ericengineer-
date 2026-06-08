@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import WeatherWidget from './WeatherWidget';
+import Logo from './Logo';
 
 const links = [
   { href: '#about', label: 'About' },
@@ -31,8 +32,8 @@ export default function Header() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-        <a href="#" className="font-serif text-xl text-primary leading-none">
-          Eric Ohiol
+        <a href="#" className="flex items-center hover:opacity-80 transition-opacity">
+          <Logo className="h-10 w-auto" />
         </a>
 
         <nav className="hidden md:flex items-center gap-6">
