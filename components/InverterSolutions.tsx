@@ -19,68 +19,76 @@ export default function InverterSolutions() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchPackages = async () => {
-    console.log('🔄 InverterSolutions: Fetching packages from Supabase...');
+    const defaultPackages = [
+      {
+        id: 1,
+        name: '3.5KVA Inverter Package',
+        battery: '200AH Battery',
+        without_solar: '₦450,000',
+        with_solar: '₦750,000',
+        featured: false,
+      },
+      {
+        id: 2,
+        name: '5KVA Inverter Package',
+        battery: '220AH Battery',
+        without_solar: '₦650,000',
+        with_solar: '₦1,100,000',
+        featured: true,
+      },
+      {
+        id: 3,
+        name: '7.5KVA Inverter Package',
+        battery: '2 × 220AH Batteries',
+        without_solar: '₦950,000',
+        with_solar: '₦1,650,000',
+        featured: false,
+      },
+      {
+        id: 4,
+        name: '10KVA Inverter Package',
+        battery: '4 × 220AH Batteries',
+        without_solar: '₦1,500,000',
+        with_solar: '₦2,400,000',
+        featured: false,
+      },
+    ];
+
     try {
+      // Try to fetch from Supabase only if configured
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        console.log('Supabase not configured, using default packages');
+        setPackages(defaultPackages);
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase
         .from('inverter_packages')
         .select('*')
         .order('id');
 
       if (error) {
-        console.error('❌ Supabase error:', error);
+        console.error('Supabase error:', error);
         setError(error.message);
         throw error;
       }
 
       if (data && data.length > 0) {
-        console.log('✅ Packages fetched successfully:', data);
+        console.log('Packages fetched from Supabase');
         setPackages(data);
       } else {
-        console.log('⚠️ No packages found in database');
-        setError('No packages found');
+        console.log('No packages found in database, using defaults');
+        setPackages(defaultPackages);
       }
       
       setLoading(false);
     } catch (err: unknown) {
-      console.error('❌ Error fetching packages:', err);
-      console.log('🔄 Using fallback prices');
+      console.error('Error fetching packages:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
       setError(errorMessage);
-      // Fallback to default packages if Supabase fails
-      setPackages([
-        {
-          id: 1,
-          name: '3.5KVA Inverter Package',
-          battery: '200AH Battery',
-          without_solar: '₦450,000',
-          with_solar: '₦750,000',
-          featured: false,
-        },
-        {
-          id: 2,
-          name: '5KVA Inverter Package',
-          battery: '220AH Battery',
-          without_solar: '₦650,000',
-          with_solar: '₦1,100,000',
-          featured: true,
-        },
-        {
-          id: 3,
-          name: '7.5KVA Inverter Package',
-          battery: '2 × 220AH Batteries',
-          without_solar: '₦950,000',
-          with_solar: '₦1,650,000',
-          featured: false,
-        },
-        {
-          id: 4,
-          name: '10KVA Inverter Package',
-          battery: '4 × 220AH Batteries',
-          without_solar: '₦1,500,000',
-          with_solar: '₦2,400,000',
-          featured: false,
-        },
-      ]);
+      // Use fallback packages
+      setPackages(defaultPackages);
       setLoading(false);
     }
   };
