@@ -143,64 +143,124 @@ export default function InverterSolutions() {
           </div>
         )}
         
-        {/* Simple Grid Layout */}
+        {/* Premium Grid Layout */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {packages.map((pkg, index) => (
             <motion.div
               key={pkg.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -8 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative bg-card rounded-2xl p-6 border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
-                pkg.featured ? 'border-primary shadow-lg' : 'border-border shadow-sm'
+              className={`relative h-full rounded-3xl overflow-hidden group transition-all duration-300 ${
+                pkg.featured 
+                  ? 'bg-gradient-to-br from-primary via-primary to-primary/95 shadow-2xl ring-2 ring-accent' 
+                  : 'bg-card border-2 border-border shadow-md hover:shadow-xl'
               }`}
             >
+              {/* Background gradient overlay for non-featured */}
+              {!pkg.featured && (
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-accent/5 to-transparent pointer-events-none" />
+              )}
+              
               {pkg.featured && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-bold px-4 py-1 rounded-full">
-                  POPULAR
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                  <motion.div
+                    animate={{ y: [0, -4, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="bg-accent text-primary text-xs font-bold px-5 py-1.5 rounded-full shadow-lg"
+                  >
+                    MOST POPULAR
+                  </motion.div>
                 </div>
               )}
               
-              {/* Header */}
-              <div className="text-center mb-6">
-                <h3 className="font-bold text-3xl text-primary mb-2">
+              <div className={`relative z-10 p-8 h-full flex flex-col ${pkg.featured ? 'text-white' : ''}`}>
+                {/* Power Badge */}
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className={`inline-flex items-center gap-2 mb-6 w-fit px-4 py-2 rounded-xl ${
+                    pkg.featured 
+                      ? 'bg-white/20 text-white' 
+                      : 'bg-accent/10 text-accent'
+                  }`}
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z" />
+                    <polyline points="13 2 13 9 20 9" />
+                  </svg>
+                  <span className="text-xs font-semibold">{pkg.name.split('KVA')[0].trim()}KVA</span>
+                </motion.div>
+                
+                {/* Title */}
+                <h3 className={`text-2xl font-bold mb-2 ${pkg.featured ? 'text-white' : 'text-primary'}`}>
                   {pkg.name.replace(' Inverter Package', '')}
                 </h3>
-                <p className="text-secondary text-sm">{pkg.battery}</p>
-              </div>
-              
-              {/* Pricing */}
-              <div className="space-y-4 mb-6">
-                <div className="text-center">
-                  <div className="text-xs text-secondary mb-1 uppercase tracking-wide">Without Solar</div>
-                  <div className="text-2xl font-bold text-primary">{pkg.without_solar}</div>
+                
+                {/* Battery spec */}
+                <p className={`text-sm mb-6 ${pkg.featured ? 'text-white/80' : 'text-secondary'}`}>
+                  {pkg.battery}
+                </p>
+                
+                {/* Pricing Section */}
+                <div className="flex-1">
+                  <div className={`mb-6 pb-6 border-b ${pkg.featured ? 'border-white/20' : 'border-border'}`}>
+                    <div className={`text-xs font-semibold uppercase tracking-wide mb-2 ${pkg.featured ? 'text-white/70' : 'text-muted'}`}>
+                      Without Solar
+                    </div>
+                    <motion.div 
+                      className={`text-3xl font-bold ${pkg.featured ? 'text-white' : 'text-primary'}`}
+                      whileHover={{ scale: 1.08 }}
+                    >
+                      {pkg.without_solar}
+                    </motion.div>
+                  </div>
+                  
+                  <div>
+                    <div className={`text-xs font-semibold uppercase tracking-wide mb-2 ${pkg.featured ? 'text-white/70' : 'text-muted'}`}>
+                      With Solar
+                    </div>
+                    <motion.div 
+                      className={`text-3xl font-bold ${pkg.featured ? 'text-white' : 'text-accent'}`}
+                      whileHover={{ scale: 1.08 }}
+                    >
+                      {pkg.with_solar}
+                    </motion.div>
+                  </div>
                 </div>
                 
-                <div className="h-px bg-border"></div>
-                
-                <div className="text-center">
-                  <div className="text-xs text-secondary mb-1 uppercase tracking-wide">With Solar</div>
-                  <div className="text-2xl font-bold text-primary">{pkg.with_solar}</div>
+                {/* CTA Buttons */}
+                <div className="space-y-3 mt-8">
+                  <motion.a
+                    href="tel:08062284585"
+                    className={`block w-full text-center px-4 py-3.5 rounded-xl font-semibold text-sm transition-all duration-300 overflow-hidden relative group/btn ${
+                      pkg.featured
+                        ? 'bg-white text-primary hover:bg-accent hover:text-white'
+                        : 'bg-primary text-white hover:bg-primary/90'
+                    }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <span className="relative z-10">Call Now</span>
+                    <div className={`absolute inset-0 opacity-0 group-hover/btn:opacity-20 transition-opacity bg-white`} />
+                  </motion.a>
+                  
+                  <motion.a
+                    href="https://wa.me/2348062284585"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`block w-full text-center px-4 py-3.5 rounded-xl font-semibold text-sm transition-all duration-300 border-2 ${
+                      pkg.featured
+                        ? 'border-white text-white hover:bg-white hover:text-primary'
+                        : 'border-accent text-accent hover:bg-accent hover:text-white'
+                    }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <span>WhatsApp</span>
+                  </motion.a>
                 </div>
-              </div>
-              
-              {/* CTA */}
-              <div className="space-y-2">
-                <a
-                  href="tel:08062284585"
-                  className="block w-full text-center px-4 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors text-sm"
-                >
-                  Call Now
-                </a>
-                <a
-                  href="https://wa.me/2348062284585"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-center px-4 py-2.5 border-2 border-primary text-primary rounded-lg font-medium hover:bg-primary hover:text-white transition-colors text-sm"
-                >
-                  WhatsApp
-                </a>
               </div>
             </motion.div>
           ))}
