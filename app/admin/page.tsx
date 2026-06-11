@@ -173,7 +173,8 @@ export default function AdminDashboard() {
       href: '/admin/services',
       icon: '⚡',
       count: stats.services,
-      color: 'from-blue-500 to-blue-600',
+      color: 'bg-blue-500',
+      lightColor: 'bg-blue-500/10',
     },
     {
       title: 'Inverter Packages',
@@ -181,7 +182,8 @@ export default function AdminDashboard() {
       href: '/admin/inverters',
       icon: '🔋',
       count: stats.inverters,
-      color: 'from-green-500 to-green-600',
+      color: 'bg-emerald-500',
+      lightColor: 'bg-emerald-500/10',
     },
     {
       title: 'Projects',
@@ -189,7 +191,8 @@ export default function AdminDashboard() {
       href: '/admin/projects',
       icon: '🏗️',
       count: stats.projects,
-      color: 'from-purple-500 to-purple-600',
+      color: 'bg-violet-500',
+      lightColor: 'bg-violet-500/10',
     },
     {
       title: 'Testimonials',
@@ -197,142 +200,208 @@ export default function AdminDashboard() {
       href: '/admin/testimonials',
       icon: '💬',
       count: stats.testimonials,
-      color: 'from-orange-500 to-orange-600',
+      color: 'bg-amber-500',
+      lightColor: 'bg-amber-500/10',
     },
   ];
 
   return (
     <div className="max-w-7xl mx-auto">
       {/* Welcome Header */}
-      <div className="mb-8">
-        <h1 className="font-serif text-4xl font-bold mb-2">
-          Welcome back, Administrator 👋
-        </h1>
-        <p className="text-secondary">
-          Manage your website content and settings from this dashboard
-        </p>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-12"
+      >
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent to-accent/80 flex items-center justify-center text-2xl shadow-lg">
+            📊
+          </div>
+          <div>
+            <h1 className="text-4xl font-bold text-primary">Dashboard</h1>
+            <p className="text-secondary text-sm mt-1">Welcome back! Manage your content below</p>
+          </div>
+        </div>
+      </motion.div>
 
-      {/* Stats Cards */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      {/* Stats Cards Grid */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {dashboardCards.map((card, index) => (
           <motion.div
             key={card.title}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ delay: index * 0.08 }}
+            whileHover={{ y: -6 }}
           >
             <Link
               href={card.href}
-              className="block bg-card rounded-xl p-6 border border-border hover:shadow-lg hover:-translate-y-1 transition-all group"
+              className="block h-full bg-card rounded-2xl p-6 border border-border hover:shadow-xl hover:border-accent/30 transition-all group overflow-hidden relative"
             >
-              <div className="flex items-start justify-between mb-4">
-                <div
-                  className={`w-12 h-12 rounded-lg bg-gradient-to-br ${card.color} flex items-center justify-center text-2xl shadow-lg`}
+              {/* Background gradient on hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-accent/5 to-transparent pointer-events-none" />
+              
+              <div className="relative z-10">
+                {/* Icon and count */}
+                <div className="flex items-start justify-between mb-6">
+                  <div className={`w-14 h-14 rounded-xl ${card.lightColor} flex items-center justify-center text-3xl shadow-sm group-hover:shadow-md transition-shadow`}>
+                    {card.icon}
+                  </div>
+                  <motion.div 
+                    className="text-4xl font-bold text-accent"
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    {card.count}
+                  </motion.div>
+                </div>
+
+                {/* Title and description */}
+                <h3 className="font-semibold text-lg text-primary mb-1.5 group-hover:text-accent transition-colors">
+                  {card.title}
+                </h3>
+                <p className="text-secondary text-sm leading-relaxed mb-4">
+                  {card.description}
+                </p>
+
+                {/* Action arrow */}
+                <motion.div
+                  className="flex items-center gap-2 text-accent text-sm font-medium"
+                  animate={{ x: 0 }}
+                  whileHover={{ x: 4 }}
                 >
-                  {card.icon}
-                </div>
-                <div className="text-3xl font-bold text-primary">
-                  {card.count}
-                </div>
+                  <span>View All</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </motion.div>
               </div>
-              <h3 className="font-semibold text-lg mb-1 group-hover:text-accent transition-colors">
-                {card.title}
-              </h3>
-              <p className="text-secondary text-sm">{card.description}</p>
             </Link>
           </motion.div>
         ))}
       </div>
 
-      {/* Quick Actions */}
-      <div className="grid md:grid-cols-2 gap-6 mb-8">
+      {/* Content Management Section */}
+      <div className="grid lg:grid-cols-3 gap-6 mb-12">
+        {/* Quick Actions */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-gradient-to-br from-accent to-accent/80 rounded-xl p-6 text-white"
+          className="lg:col-span-2 bg-gradient-to-br from-primary via-primary to-primary/95 rounded-2xl p-8 text-white shadow-xl"
         >
-          <h3 className="font-semibold text-xl mb-2">🚀 Quick Actions</h3>
-          <p className="text-white/90 text-sm mb-4">
-            Common tasks to get you started
-          </p>
-          <div className="space-y-2">
-            <Link
-              href="/admin/inverters"
-              className="block bg-white/20 hover:bg-white/30 rounded-lg px-4 py-2 text-sm transition-colors"
-            >
-              + Add New Inverter Package
-            </Link>
-            <Link
-              href="/admin/projects"
-              className="block bg-white/20 hover:bg-white/30 rounded-lg px-4 py-2 text-sm transition-colors"
-            >
-              + Add New Project
-            </Link>
-            <Link
-              href="/admin/testimonials"
-              className="block bg-white/20 hover:bg-white/30 rounded-lg px-4 py-2 text-sm transition-colors"
-            >
-              + Add New Testimonial
-            </Link>
+          <div className="flex items-start justify-between mb-6">
+            <div>
+              <h3 className="font-semibold text-2xl mb-2">Quick Actions</h3>
+              <p className="text-white/80 text-sm">
+                Fast shortcuts to common tasks
+              </p>
+            </div>
+            <div className="text-4xl">⚡</div>
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-3">
+            {[
+              { label: '+ Add Service', href: '/admin/services' },
+              { label: '+ Add Inverter', href: '/admin/inverters' },
+              { label: '+ Add Project', href: '/admin/projects' },
+              { label: '+ Add Testimonial', href: '/admin/testimonials' },
+            ].map((action, idx) => (
+              <motion.div key={action.label} whileHover={{ scale: 1.02 }}>
+                <Link
+                  href={action.href}
+                  className="block bg-white/15 hover:bg-white/25 rounded-xl px-4 py-3.5 text-sm font-medium transition-all backdrop-blur-sm border border-white/20 hover:border-white/30 text-center"
+                >
+                  {action.label}
+                </Link>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
 
+        {/* Status Card */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-card rounded-xl p-6 border border-border"
+          className="bg-card rounded-2xl p-8 border border-border shadow-md"
         >
-          <h3 className="font-semibold text-xl mb-2">📚 Documentation</h3>
-          <p className="text-secondary text-sm mb-4">
-            Resources to help you manage the website
-          </p>
-          <div className="space-y-2 text-sm">
-            <a
-              href="https://supabase.com/docs"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-accent hover:text-accent/80"
-            >
-              <span>→</span>
-              <span>Supabase Documentation</span>
-            </a>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
+            <h3 className="font-semibold text-lg text-primary">Status</h3>
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-secondary">Database</span>
+              <span className="text-xs font-medium px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/30">
+                Connected
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-secondary">Supabase</span>
+              <span className="text-xs font-medium px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 border border-blue-500/30">
+                Active
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-secondary">Website</span>
+              <span className="text-xs font-medium px-3 py-1 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/30">
+                Live
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-6 pt-6 border-t border-border">
             <Link
               href="/"
               target="_blank"
-              className="flex items-center gap-2 text-accent hover:text-accent/80"
+              className="inline-flex items-center gap-2 text-accent hover:text-accent/80 text-sm font-medium"
             >
-              <span>→</span>
-              <span>View Live Website</span>
+              <span>🌐 View Live Website</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-6l4 4m0 0l-4-4m4 4V3" />
+              </svg>
             </Link>
           </div>
         </motion.div>
       </div>
 
-      {/* Setup Notice */}
+      {/* System Status */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="bg-blue-50 border border-blue-200 rounded-xl p-6"
+        className="bg-gradient-to-r from-emerald-500/10 to-blue-500/10 border border-emerald-500/30 rounded-2xl p-8"
       >
-        <div className="flex items-start gap-4">
-          <div className="text-3xl">💡</div>
+        <div className="flex gap-4">
+          <div className="flex-shrink-0 text-3xl">✅</div>
           <div className="flex-1">
-            <h3 className="font-semibold text-lg mb-2 text-primary">
-              Database Connected
+            <h3 className="font-semibold text-lg text-primary mb-2">
+              All Systems Operational
             </h3>
             <p className="text-secondary text-sm mb-3">
-              Your Supabase database is configured and ready. All changes made
-              here will be reflected on your live website immediately.
+              Your Supabase database is connected and all tables are ready. All changes made in this dashboard will be reflected on your live website immediately.
             </p>
-            <ul className="text-secondary text-sm space-y-1">
-              <li>✅ Tables created and populated</li>
-              <li>✅ Row Level Security enabled</li>
-              <li>✅ Public read access configured</li>
-            </ul>
+            <div className="flex flex-wrap gap-3 text-sm">
+              <div className="flex items-center gap-2 text-emerald-600">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Database Connected</span>
+              </div>
+              <div className="flex items-center gap-2 text-blue-600">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Row Level Security</span>
+              </div>
+              <div className="flex items-center gap-2 text-violet-600">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>Public Access</span>
+              </div>
+            </div>
           </div>
         </div>
       </motion.div>
