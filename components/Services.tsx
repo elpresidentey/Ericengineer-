@@ -103,28 +103,45 @@ export default function Services() {
             {services.map((service, index) => (
               <motion.article
                 key={service.title}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.04 }}
-                className={`${service.colSpan} ${service.rowSpan} bento-card p-6 flex flex-col justify-between group cursor-pointer`}
+                whileHover={{ y: -4 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.5, delay: index * 0.06 }}
+                className={`${service.colSpan} ${service.rowSpan} bento-card p-6 flex flex-col justify-between group cursor-pointer overflow-hidden relative`}
                 onClick={() => setSelectedService(service)}
               >
-                <div>
-                  <h3 className="font-semibold text-lg md:text-xl text-primary mb-2 group-hover:text-accent transition-colors">
+                {/* Animated background gradient */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-accent/5 to-transparent" />
+                
+                <div className="relative z-10">
+                  <motion.h3 
+                    className="font-semibold text-lg md:text-xl text-primary mb-2 group-hover:text-accent transition-colors"
+                    whileHover={{ x: 4 }}
+                  >
                     {service.title}
-                  </h3>
+                  </motion.h3>
                   <p className="text-secondary text-sm leading-relaxed">
                     {service.description}
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2 mt-4 text-sm font-medium text-muted group-hover:text-accent transition-colors">
+                <motion.div 
+                  className="flex items-center gap-2 mt-4 text-sm font-medium text-muted group-hover:text-accent transition-colors relative z-10"
+                  whileHover={{ x: 4 }}
+                >
                   <span>View details</span>
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <motion.svg 
+                    className="w-4 h-4" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                    animate={{ x: 0 }}
+                    whileHover={{ x: 4 }}
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
+                  </motion.svg>
+                </motion.div>
               </motion.article>
             ))}
           </div>

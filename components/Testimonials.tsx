@@ -38,20 +38,34 @@ export default function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <motion.blockquote
               key={testimonial.name}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.06 }}
-              className="bento-card p-6 flex flex-col"
+              whileHover={{ y: -6 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bento-card p-6 flex flex-col group cursor-pointer overflow-hidden relative"
             >
-              <p className="text-secondary text-sm leading-relaxed flex-1 mb-5">
-                &ldquo;{testimonial.message}&rdquo;
-              </p>
+              {/* Animated gradient background */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-accent/5 to-transparent" />
+              
+              {/* Animated top accent line */}
+              <div className="absolute top-0 left-0 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-accent to-transparent transition-all duration-500" />
+              
+              <div className="relative z-10">
+                <p className="text-secondary text-sm leading-relaxed flex-1 mb-5 group-hover:text-foreground transition-colors">
+                  &ldquo;{testimonial.message}&rdquo;
+                </p>
 
-              <footer>
-                <div className="font-semibold text-sm text-primary">{testimonial.name}</div>
-                <div className="text-xs text-muted mt-0.5">{testimonial.position}</div>
-              </footer>
+                <footer>
+                  <motion.div 
+                    className="font-semibold text-sm text-primary group-hover:text-accent transition-colors"
+                    whileHover={{ x: 4 }}
+                  >
+                    {testimonial.name}
+                  </motion.div>
+                  <div className="text-xs text-muted mt-0.5 group-hover:text-secondary transition-colors">{testimonial.position}</div>
+                </footer>
+              </div>
             </motion.blockquote>
           ))}
         </div>

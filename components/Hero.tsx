@@ -63,26 +63,35 @@ export default function Hero() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <a
+              <motion.a
                 href="#services"
-                className="px-6 py-3.5 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors"
+                className="px-6 py-3.5 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors overflow-hidden relative group"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
               >
-                View Services
-              </a>
-              <a
+                <span className="relative z-10">View Services</span>
+                <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-10 transition-opacity" />
+              </motion.a>
+              <motion.a
                 href="tel:08062284585"
-                className="px-6 py-3.5 bg-card text-primary border border-border rounded-xl text-sm font-medium hover:border-primary/30 transition-colors"
+                className="px-6 py-3.5 bg-card text-primary border border-border rounded-xl text-sm font-medium hover:border-primary/30 transition-colors overflow-hidden relative group"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Call Now
-              </a>
-              <a
+                <span className="relative z-10">Call Now</span>
+                <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity" />
+              </motion.a>
+              <motion.a
                 href="https://wa.me/2348062284585"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3.5 text-accent border border-accent/30 rounded-xl text-sm font-medium hover:bg-accent-muted transition-colors"
+                className="px-6 py-3.5 text-accent border border-accent/30 rounded-xl text-sm font-medium hover:bg-accent-muted transition-colors overflow-hidden relative group"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
               >
-                WhatsApp
-              </a>
+                <span className="relative z-10">WhatsApp</span>
+                <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-10 transition-opacity" />
+              </motion.a>
             </div>
 
             <div className="grid grid-cols-3 gap-4 pt-2 border-t border-border">
@@ -90,11 +99,21 @@ export default function Hero() {
                 { value: '150+', label: 'Projects' },
                 { value: '30+', label: 'Years' },
                 { value: '100%', label: 'Quality' },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <div className="text-2xl md:text-3xl font-semibold text-primary">{stat.value}</div>
+              ].map((stat, idx) => (
+                <motion.div 
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + idx * 0.1, duration: 0.6 }}
+                >
+                  <motion.div 
+                    className="text-2xl md:text-3xl font-semibold text-primary"
+                    whileHover={{ scale: 1.1, color: '#C17A2E' }}
+                  >
+                    {stat.value}
+                  </motion.div>
                   <div className="text-xs text-muted mt-0.5">{stat.label}</div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </motion.div>
@@ -153,29 +172,53 @@ export default function Hero() {
               </div>
 
               {/* Side bento tiles */}
-              <div className="rounded-2xl bg-primary p-6 flex flex-col justify-between group hover:bg-primary/95 transition-colors border-2 border-primary">
-                <div className="w-12 h-12 rounded-lg bg-accent/30 flex items-center justify-center mb-4">
+              <motion.div 
+                className="rounded-2xl bg-primary p-6 flex flex-col justify-between group hover:bg-primary/95 transition-colors border-2 border-primary overflow-hidden cursor-pointer"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+                whileHover={{ y: -8 }}
+              >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-accent/10 to-transparent pointer-events-none" />
+                
+                <motion.div 
+                  className="w-12 h-12 rounded-lg bg-accent/30 flex items-center justify-center mb-4 relative z-10 group-hover:bg-accent/50 transition-colors"
+                  animate={{ y: [0, -4, 0] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
                   <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                   </svg>
+                </motion.div>
+                <div className="relative z-10">
+                  <div className="text-white font-bold text-xl group-hover:text-accent transition-colors">Solar</div>
+                  <div className="text-white/80 text-sm mt-2 group-hover:text-white/90 transition-colors">Installation</div>
                 </div>
-                <div>
-                  <div className="text-white font-bold text-xl">Solar</div>
-                  <div className="text-white/80 text-sm mt-2">Installation</div>
-                </div>
-              </div>
+              </motion.div>
 
-              <div className="rounded-2xl bg-accent p-6 flex flex-col justify-between group hover:bg-accent/90 transition-colors border-2 border-accent">
-                <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-4">
+              <motion.div 
+                className="rounded-2xl bg-accent p-6 flex flex-col justify-between group hover:bg-accent/90 transition-colors border-2 border-accent overflow-hidden cursor-pointer"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+                whileHover={{ y: -8 }}
+              >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+                
+                <motion.div 
+                  className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-4 relative z-10 group-hover:bg-white/30 transition-colors"
+                  animate={{ y: [0, -4, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
+                >
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
+                </motion.div>
+                <div className="relative z-10">
+                  <div className="text-white font-bold text-xl group-hover:text-white transition-colors">Security</div>
+                  <div className="text-white text-sm mt-2 group-hover:text-white/90 transition-colors">Systems</div>
                 </div>
-                <div>
-                  <div className="text-white font-bold text-xl">Security</div>
-                  <div className="text-white text-sm mt-2">Systems</div>
-                </div>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>

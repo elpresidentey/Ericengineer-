@@ -39,21 +39,34 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-6">
           <WeatherWidget />
           
-          {links.map((link) => (
-            <a
+          {links.map((link, idx) => (
+            <motion.a
               key={link.href}
               href={link.href}
-              className="text-sm text-secondary hover:text-primary transition-colors"
+              className="text-sm text-secondary hover:text-primary transition-colors relative group"
+              whileHover={{ y: -2 }}
             >
               {link.label}
-            </a>
+              <motion.div 
+                className="absolute bottom-0 left-0 h-0.5 bg-accent w-0 group-hover:w-full transition-all duration-300"
+                initial={{ width: 0 }}
+                whileHover={{ width: '100%' }}
+              />
+            </motion.a>
           ))}
-          <a
+          <motion.a
             href="tel:08062284585"
-            className="text-sm font-medium px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+            className="text-sm font-medium px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors overflow-hidden relative group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
           >
-            Call Now
-          </a>
+            <span className="relative z-10">Call Now</span>
+            <motion.div 
+              className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-20 transition-opacity"
+              initial={{ x: '-100%' }}
+              whileHover={{ x: 0 }}
+            />
+          </motion.a>
         </nav>
 
         <button
