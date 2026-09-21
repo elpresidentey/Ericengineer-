@@ -1,19 +1,20 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap');
 
 @theme inline {
   --color-background: #FAFAF8;
   --color-foreground: #0F0F0F;
   --color-card: #FFFFFF;
   --color-primary: #0F0F0F;
-  --color-secondary: #5C5C5C;
-  --color-border: #E0E0E0;
-  --color-accent: #C17A2E;
-  --color-accent-muted: #C17A2E18;
+  --color-secondary: #4A4A4A;
+  --color-border: #D5D5D5;
+  --color-accent: #A85D1A;
+  --color-accent-muted: #A85D1A12;
   --color-hover: #F5F5F3;
-  --color-muted: #8A857C;
+  --color-muted: #6B6560;
 
-  --font-sans: system-ui, -apple-system, sans-serif;
-  --font-serif: Georgia, serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
 
   --tracking-tighter: -0.03em;
   --tracking-tight: -0.015em;
@@ -22,6 +23,17 @@
 
 * {
   scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #c4c0ba;
+  border-radius: 3px;
 }
 
 body {
@@ -40,7 +52,6 @@ h1, h2, h3, h4 {
   letter-spacing: var(--tracking-tighter);
 }
 
-/* Section rhythm */
 .section-padding {
   @apply py-24 px-4 md:px-6;
 }
@@ -63,18 +74,16 @@ h1, h2, h3, h4 {
   @apply text-secondary text-base md:text-lg mt-4 max-w-xl leading-relaxed;
 }
 
-/* Bento surfaces */
 .bento-card {
-  @apply bg-card rounded-2xl border-2 border-border overflow-hidden transition-all duration-300;
-  box-shadow: 0 2px 8px rgba(15, 15, 15, 0.04);
+  @apply bg-card rounded-2xl border border-border overflow-hidden transition-all duration-300;
+  box-shadow: 0 1px 3px rgba(15, 15, 15, 0.04);
 }
 
 .bento-card:hover {
-  @apply border-primary/20;
-  box-shadow: 0 8px 24px rgba(15, 15, 15, 0.08);
+  @apply border-primary/15;
+  box-shadow: 0 8px 24px rgba(15, 15, 15, 0.06);
 }
 
-/* Form focus */
 input:focus-visible,
 textarea:focus-visible,
 button:focus-visible,

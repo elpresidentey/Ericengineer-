@@ -36,7 +36,7 @@ export default function Contact() {
           <h2 className="section-title">Get In Touch</h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-3">
+        <div className="grid lg:grid-cols-5 gap-4">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -52,7 +52,7 @@ export default function Contact() {
                   { label: 'WhatsApp', value: 'Message on WhatsApp', href: 'https://wa.me/2348062284585' },
                 ].map((item) => (
                   <div key={item.label}>
-                    <div className="text-xs text-muted mb-0.5">{item.label}</div>
+                    <div className="text-[11px] font-medium text-muted uppercase tracking-wider mb-1">{item.label}</div>
                     <a
                       href={item.href}
                       target={item.label === 'WhatsApp' ? '_blank' : undefined}
@@ -64,8 +64,8 @@ export default function Contact() {
                   </div>
                 ))}
                 <div>
-                  <div className="text-xs text-muted mb-0.5">Coverage</div>
-                  <div className="text-sm font-medium text-primary">Lagos & Nationwide</div>
+                  <div className="text-[11px] font-medium text-muted uppercase tracking-wider mb-1">Coverage</div>
+                  <div className="text-sm font-medium text-primary">Lagos &amp; Nationwide</div>
                 </div>
               </div>
             </div>
@@ -74,7 +74,7 @@ export default function Contact() {
               href="https://wa.me/2348062284585"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-6 py-3 bg-accent text-white rounded-xl text-sm font-medium hover:bg-accent/90 transition-colors"
+              className="inline-block px-6 py-2.5 bg-accent text-white rounded-xl text-sm font-medium hover:bg-accent/90 transition-colors"
             >
               Chat on WhatsApp
             </a>
@@ -87,9 +87,9 @@ export default function Contact() {
             transition={{ delay: 0.08 }}
             className="lg:col-span-3 bento-card p-6 md:p-8"
           >
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-xs font-medium text-muted mb-1.5">
+                <label htmlFor="name" className="block text-[11px] font-medium text-muted uppercase tracking-wider mb-1.5">
                   Full Name
                 </label>
                 <input
@@ -98,12 +98,12 @@ export default function Contact() {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:border-accent transition-colors"
+                  className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm focus:outline-none focus:border-accent transition-colors"
                 />
               </div>
 
               <div>
-                <label htmlFor="phone" className="block text-xs font-medium text-muted mb-1.5">
+                <label htmlFor="phone" className="block text-[11px] font-medium text-muted uppercase tracking-wider mb-1.5">
                   Phone Number
                 </label>
                 <input
@@ -112,12 +112,12 @@ export default function Contact() {
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:border-accent transition-colors"
+                  className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm focus:outline-none focus:border-accent transition-colors"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-xs font-medium text-muted mb-1.5">
+                <label htmlFor="message" className="block text-[11px] font-medium text-muted uppercase tracking-wider mb-1.5">
                   Message
                 </label>
                 <textarea
@@ -126,14 +126,14 @@ export default function Contact() {
                   rows={4}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm focus:outline-none focus:border-accent transition-colors resize-none"
+                  className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm focus:outline-none focus:border-accent transition-colors resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="w-full py-3.5 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
+                className="w-full py-3 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
               >
                 {status === 'sending' ? 'Sending...' : status === 'success' ? 'Message Sent!' : 'Send Message'}
               </button>

@@ -44,7 +44,7 @@ export default function About() {
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 space-y-5"
+            className="lg:col-span-2 space-y-4"
           >
             <p className="text-secondary leading-relaxed">
               With over 30 years of experience in electrical engineering, Eric Ohiol has established
@@ -70,7 +70,7 @@ export default function About() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 className={`bento-card p-5 ${index === 0 ? 'sm:col-span-2' : ''}`}
               >
-                <h3 className="font-semibold text-sm text-primary mb-1.5">{credential.title}</h3>
+                <h3 className="font-semibold text-sm text-primary mb-1">{credential.title}</h3>
                 <p className="text-muted text-sm leading-relaxed">{credential.description}</p>
               </motion.div>
             ))}

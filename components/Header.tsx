@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import WeatherWidget from './WeatherWidget';
-import Logo from './Logo';
 
 const links = [
   { href: '#about', label: 'About' },
@@ -25,20 +23,14 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-background/90 backdrop-blur-md border-b border-border shadow-sm'
-          : 'bg-transparent'
-      }`}
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-sm' : 'bg-transparent'}`}
     >
       <div className="max-w-6xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-        <a href="#" className="flex items-center hover:opacity-80 transition-opacity">
-          <Logo className="h-10 w-auto" />
+        <a href="#" className="font-serif text-xl text-primary leading-none">
+          Eric Ohiol
         </a>
 
         <nav className="hidden md:flex items-center gap-6">
-          <WeatherWidget />
-          
           {links.map((link) => (
             <a
               key={link.href}
@@ -58,17 +50,25 @@ export default function Header() {
 
         <button
           type="button"
-          className="md:hidden p-2 -mr-2 text-primary"
+          className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5"
           onClick={() => setMenuOpen((o) => !o)}
           aria-label="Toggle menu"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {menuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
+          <motion.span
+            animate={menuOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="w-5 h-px bg-primary block origin-center"
+          />
+          <motion.span
+            animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+            transition={{ duration: 0.2 }}
+            className="w-5 h-px bg-primary block origin-center"
+          />
+          <motion.span
+            animate={menuOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="w-5 h-px bg-primary block origin-center"
+          />
         </button>
       </div>
 
@@ -78,22 +78,26 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="md:hidden overflow-hidden bg-background border-b border-border"
           >
             <nav className="flex flex-col px-4 py-4 gap-1">
-              {links.map((link) => (
-                <a
+              {links.map((link, i) => (
+                <motion.a
                   key={link.href}
                   href={link.href}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.04 }}
                   onClick={() => setMenuOpen(false)}
-                  className="py-3 text-secondary hover:text-primary border-b border-border/50 last:border-0"
+                  className="block px-3 py-2.5 rounded-lg text-secondary hover:text-primary hover:bg-hover transition-colors text-sm"
                 >
                   {link.label}
-                </a>
+                </motion.a>
               ))}
               <a
                 href="tel:08062284585"
-                className="mt-3 text-center py-3 bg-primary text-white rounded-lg font-medium"
+                className="mt-2 flex items-center justify-center px-3 py-2.5 rounded-lg text-white bg-primary text-sm font-medium hover:bg-primary/90 transition-colors"
               >
                 Call Now
               </a>
